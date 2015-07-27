@@ -70,4 +70,4 @@ improved estimator is implemented.
 
 # License
 This program is distributed under the Boost Software License.
-See `LICENSE_1_0.txt` for detail.
+See [LICENSE_1_0.txt](LICENSE_1_0.txt) for detail.
