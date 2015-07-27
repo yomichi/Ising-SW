@@ -24,6 +24,9 @@ Executable file `ising` will be built in `build` directory.
     
     # extract results
     python plot.py
+    
+    # several output files have been generated
+    ls *.dat
 
 # Input parameters
 - `T`
