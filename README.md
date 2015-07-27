@@ -5,7 +5,7 @@ Swendsen-Wang algorithm for classical Ising model implemented with ALPS/parapack
 - ALPS v2
 
 # Build
-Type `ALPS_HOME=/where/ALPS/is/built sh make.sh`.
+Type `ALPS_HOME=/where/ALPS/is/built ./make.sh`.
 Executable file `ising` will be built in `build` directory.
 
 # Run
