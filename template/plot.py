@@ -1,4 +1,3 @@
-import numpy as np
 import pyalps
 import pyalps.plot as plot
 
