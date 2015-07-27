@@ -1,0 +1,5 @@
+*~
+*.sw?
+build
+run
+!.gitignore
