@@ -44,7 +44,7 @@ void Worker::run(alps::ObservableSet& obs)
   // make clusters
 
   int activated = 0;
-  std::vector<union_find::Node> nodes(nsites_, union_find::Node());
+  std::vector<union_find::Node> nodes(nsites_);
   foreach(bond_descriptor b, bonds()){
     const int lsite = source(b);
     const int rsite = target(b);
@@ -94,7 +94,7 @@ void Worker::run(alps::ObservableSet& obs)
 
   obs["Magnetization^2"] << m2;
   obs["Magnetization^4"] << m4;
-  obs["|Magnetization|"] << 1.0*std::abs(ma) / nsites_;
+  obs["|Magnetization|"] << std::abs(ma) / nsites_;
   obs["Susceptibility"] << m2 * nsites_ *  beta_;
   obs["Number of Sites"] << 1.0 * nsites_;
   obs["Energy"] << ene;
