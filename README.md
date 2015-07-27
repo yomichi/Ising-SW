@@ -26,3 +26,7 @@ Executable file `ising` will be built in `build` directory.
     # extract results
     python plot.py
 
+
+# License
+This program is distributed under the Boost Software License.
+See `LICENSE_1_0.txt` for detail.
