@@ -51,25 +51,33 @@ Executable file `ising` will be built in `build` directory.
 Except for `|Magnetization|` and `Connected Susceptibility`,
 improved estimator is implemented.
 
-- `Magnetization^2`
-    - squared magnetization per site `<M^2>`
-- `Magnetization^4`
-    - biquadratic magnetization per site `<M^4>`
-- `|Magnetization|`
-    - absolute magnetization per site `<|M|>`
-- `Binder Ratio`
-    - Binder ratio defined as `<M^4>/<M^2>^2`
-- `Susceptibility`
-    - Magnetic susceptibility `N <M^2> / T`
+- squared magnetization per site `<M^2>`
+    - Observable name :  `Magnetization^2`
+    - result file (`plot.py`) : `mag2-L*.dat`
+- biquadratic magnetization per site `<M^4>`
+    - Observable name : `Magnetization^4`
+    - result file (`plot.py`) : `mag4-L*.dat`
+- absolute magnetization per site `<|M|>`
+    - Observable name : `|Magnetization|`
+    - result file (`plot.py`) : `amag-L*.dat`
+- Binder ratio defined as `<M^4>/<M^2>^2`
+    - Observable name : `Binder Ratio`
+    - result file (`plot.py`) : `binder-L*.dat`
+- Magnetic susceptibility `N <M^2> / T`
+    - Obaservable name : `Susceptibility`
     - This _survives_ in ordered state
-- `Connected Susceptibility`
-    - Magnetic susceptibility `N (<M^2> - <|M|>^2 ) /T`
+    - result file (`plot.py`) : `sus-L*.dat`
+- Magnetic susceptibility `N (<M^2> - <|M|>^2 ) /T`
+    - Observable name : `Connected Susceptibility`
     - This _vanishes_ in ordered state
-- `Energy`
-    - total energy (_not_ per site or bond)
-- `Specific Heat`
-    - specific heat
-
+    - result file (`plot.py`) : `csus-L*.dat`
+- total energy (_not_ per site or bond)
+    - Observable name : `Energy`
+    - result file (`plot.py`) : `ene-L*.dat`
+- specific heat
+    - Observable name : `Specific Heat`
+    - result file (`plot.py`) : `spec-L*.dat`
+    - NOTE: This evaluator has not been tested enough...
 
 # License
 This program is distributed under the Boost Software License.
