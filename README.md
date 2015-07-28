@@ -23,7 +23,7 @@ Executable file `ising` will be built in `build` directory.
     mpiexec -np 4 ../build/ising --mpi params.in.xml
     
     # extract results
-    python plot.py
+    python extract.py
     
     # several output files have been generated
     ls *.dat
@@ -53,30 +53,30 @@ improved estimator is implemented.
 
 - squared magnetization per site `<M^2>`
     - Observable name :  `Magnetization^2`
-    - result file (`plot.py`) : `mag2-L*.dat`
+    - result file (`extract.py`) : `mag2-L*.dat`
 - biquadratic magnetization per site `<M^4>`
     - Observable name : `Magnetization^4`
-    - result file (`plot.py`) : `mag4-L*.dat`
+    - result file (`extract.py`) : `mag4-L*.dat`
 - absolute magnetization per site `<|M|>`
     - Observable name : `|Magnetization|`
-    - result file (`plot.py`) : `amag-L*.dat`
+    - result file (`extract.py`) : `amag-L*.dat`
 - Binder ratio defined as `<M^4>/<M^2>^2`
     - Observable name : `Binder Ratio`
-    - result file (`plot.py`) : `binder-L*.dat`
+    - result file (`extract.py`) : `binder-L*.dat`
 - Magnetic susceptibility `N <M^2> / T`
     - Obaservable name : `Susceptibility`
     - This _survives_ in ordered state
-    - result file (`plot.py`) : `sus-L*.dat`
+    - result file (`extract.py`) : `sus-L*.dat`
 - Magnetic susceptibility `N (<M^2> - <|M|>^2 ) /T`
     - Observable name : `Connected Susceptibility`
     - This _vanishes_ in ordered state
-    - result file (`plot.py`) : `csus-L*.dat`
+    - result file (`extract.py`) : `csus-L*.dat`
 - total energy (_not_ per site or bond)
     - Observable name : `Energy`
-    - result file (`plot.py`) : `ene-L*.dat`
+    - result file (`extract.py`) : `ene-L*.dat`
 - specific heat
     - Observable name : `Specific Heat`
-    - result file (`plot.py`) : `spec-L*.dat`
+    - result file (`extract.py`) : `spec-L*.dat`
     - NOTE: This evaluator has not been tested enough...
 
 # License
