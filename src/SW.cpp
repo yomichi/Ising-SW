@@ -83,7 +83,7 @@ void Worker::run(alps::ObservableSet& obs)
   double m2 = 0.0;
   double m4 = 0.0;
   for(int ci=0; ci < nc; ++ci){
-    m4 += cluster_size2[ci] * (cluster_size2[ci] + 12*m2);
+    m4 += cluster_size2[ci] * (cluster_size2[ci] + 6*m2);
     m2 += cluster_size2[ci];
   }
   const double V2 = nsites_ * nsites_;
