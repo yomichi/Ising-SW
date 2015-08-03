@@ -15,13 +15,38 @@ Worker::Worker(alps::Parameters const& params):
   T_(evaluate("T", params)),
   beta_(1.0/T_),
   J_(params.value_or_default("J", 1.0)),
-  p_(-boost::math::expm1(-2.0*beta_*J_)),
   nsites_(num_sites()),
   nbonds_(num_bonds()),
-  ene_coeff_(2.0 * J_ / p_),
   spins_(nsites_, 1),
   V2_(nsites_*nsites_)
 {
+  init(params);
+}
+
+void Worker::init(alps::Parameters const& params)
+{
+  if(params.defined("MODEL")){
+    std::string modelname = params["MODEL"];
+    if(modelname ==  std::string("Ising")){
+      ene_const_ = nbonds_ * J_;
+      q_ = 2;
+      J_ *= 2;
+    }else if(modelname == std::string("Potts")){
+      q_ = evaluate("q", params);
+      ene_const_ = 0.0;
+    }else{
+      std::cerr << modelname << " model is not implemented.";
+      exit(127);
+    }
+  }else{
+    std::cerr << "parameter \"MODEL\" is not defined.";
+    exit(127);
+  }
+  negspin_ = 1.0 / (q_-1);
+  p_ = -boost::math::expm1(-beta_*J_);
+  m2_coeff_ = negspin_;
+  m4_coeff_ = (1.0 + negspin_*negspin_*negspin_)/q_;
+  ene_coeff_ = J_ / p_;
 }
 
 void Worker::init_observables(alps::Parameters const&, alps::ObservableSet& obs)
@@ -66,11 +91,10 @@ void Worker::run(alps::ObservableSet& obs)
     if(root.id == -1){
       root.id = id++;
       cluster_size2.push_back(root.size*root.size);
-      int s = 2*random_01();
-      cluster_spin.push_back(2*s-1);
+      cluster_spin.push_back(q_ * random_01());
     }
     spins_[site] = cluster_spin[root.id];
-    ma += spins_[site];
+    ma += spins_[site] == 0 ? 1.0 : negspin_;
   }
 
   if(!is_thermalized()){
@@ -83,14 +107,15 @@ void Worker::run(alps::ObservableSet& obs)
   double m2 = 0.0;
   double m4 = 0.0;
   for(int ci=0; ci < nc; ++ci){
-    m4 += cluster_size2[ci] * (cluster_size2[ci] + 6*m2);
-    m2 += cluster_size2[ci];
+    m4 += m4_coeff_ * cluster_size2[ci] * cluster_size2[ci];
+    m4 += 6 * cluster_size2[ci] * m2;
+    m2 += m2_coeff_ * cluster_size2[ci];
   }
   const double V2 = nsites_ * nsites_;
   m2 /= V2;
   m4 /= (V2*V2);
 
-  double ene = nbonds_ * J_ - ene_coeff_ * activated;
+  double ene = ene_const_ - ene_coeff_ * activated;
 
   obs["Magnetization^2"] << m2;
   obs["Magnetization^4"] << m4;
@@ -106,7 +131,6 @@ void Evaluator::evaluate(alps::ObservableSet& obs) const
 {
   const double T = alps::evaluate("T", params_);
   const double beta = 1.0/T;
-  const double J = params_.value_or_default("J", 1.0);
 
   alps::RealObsevaluator m2 = obs["Magnetization^2"];
   alps::RealObsevaluator m4 = obs["Magnetization^4"];
@@ -123,9 +147,11 @@ void Evaluator::evaluate(alps::ObservableSet& obs) const
   csus.rename("Connected Susceptibility");
   obs.addObservable(csus);
 
-  const double bj2 = -2.0*beta*J;
-  const double coeff = bj2 / (boost::math::expm1(bj2));
-  alps::RealObsevaluator spec = (n2 - n*n + std::exp(bj2)*n) * coeff * coeff;
+  const double J = static_cast<double>(params_.value_or_default("J", 1.0)) * (params_["MODEL"]==std::string("Ising") ? 2.0:1.0);
+
+  const double bj = -beta*J;
+  const double coeff = bj / (boost::math::expm1(bj));
+  alps::RealObsevaluator spec = (n2 - n*n + std::exp(bj)*n) * coeff * coeff;
   spec.rename("Specific Heat");
   obs.addObservable(spec);
 }
