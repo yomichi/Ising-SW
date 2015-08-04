@@ -12,11 +12,15 @@ private:
   /*
    * parameters
    */
+  int q_;
   double T_, beta_;
   double J_;
   double p_;
   unsigned int nsites_, nbonds_;
-  double ene_coeff_;
+
+  double negspin_;
+  double m2_coeff_, m4_coeff_;
+  double ene_coeff_, ene_const_;
   double V2_;
 
   /*
@@ -25,6 +29,7 @@ private:
   alps::mc_steps mcs_;
   std::vector<int> spins_;
 
+  void init(alps::Parameters const& params);
   int update();
 
 public:
