@@ -94,7 +94,7 @@ void Worker::run(alps::ObservableSet& obs)
       cluster_spin.push_back(q_ * random_01());
     }
     spins_[site] = cluster_spin[root.id];
-    ma += spins_[site] == 0 ? 1.0 : negspin_;
+    ma += spins_[site] == 0 ? 1.0 : -negspin_;
   }
 
   if(!is_thermalized()){
