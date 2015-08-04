@@ -6,9 +6,11 @@ params = []
 MCS = 65536
 
 for L in [16, 24, 32]:
-  for T in np.linspace(2.0, 2.5, 51):
+  for T in np.linspace(1.1, 1.15, 51):
     params.append({
       'ALGORITHM' : 'cluster',
+      'MODEL' : 'Potts'
+      'q' : 2,
       'LATTICE' : 'square lattice',
       'L' : L,
       'T' : T,
