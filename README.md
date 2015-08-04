@@ -1,5 +1,5 @@
 # Ising-SW
-Swendsen-Wang algorithm for classical Ising model implemented with ALPS/parapack library.
+Swendsen-Wang algorithm for classical Ising / Potts model implemented with ALPS/parapack library.
 
 # Requirement
 - ALPS v2
@@ -29,8 +29,18 @@ Executable file `ising` will be built in `build` directory.
     ls *.dat
 
 # Input parameters
-- `T`
-    - Temperature
+- `MODEL`
+    - "Potts" or "Ising" model
+    - "Potts"
+        - `E = -J \sum_{<ij>} \delta_{S_i, S_j}`
+            - `S_i = 1, 2, \dots, q` is a spin at site i
+            - `\delta` is Kroneker delta
+            - `\sum_{<ij>}` runs all nearest neighbor pairs
+    - "Ising"
+        - `E = -J \sum_{<ij>} S_i S_j`
+        - `S_i = +/- 1`
+- `q`
+    - The number of states of one spin
 - `J`
     - Coupling constant (only ferromagnet system (J>0) can be dealt with)
     - By default, `J = 1`
@@ -40,6 +50,8 @@ Executable file `ising` will be built in `build` directory.
 - `L`, `W`, `H`
     - Lattice length, width, and height.
     - `W` and `H` are equal to `L` and `W` by default.
+- `T`
+    - Temperature
 - `SWEEPS`
     - Monte Carlo steps
     - By default, `SWEEPS = 65536`
@@ -77,7 +89,6 @@ improved estimator is implemented.
 - specific heat
     - Observable name : `Specific Heat`
     - result file (`extract.py`) : `spec-L*.dat`
-    - NOTE: This evaluator has not been tested enough...
 
 # License
 This program is distributed under the Boost Software License.
