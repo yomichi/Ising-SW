@@ -6,6 +6,7 @@
 #include <boost/math/special_functions/expm1.hpp>
 #include <boost/foreach.hpp>
 #define foreach BOOST_FOREACH
+#include <boost/timer/timer.hpp>
 
 namespace ising{
 
@@ -51,6 +52,8 @@ void Worker::init(alps::Parameters const& params)
 
 void Worker::init_observables(alps::Parameters const&, alps::ObservableSet& obs)
 {
+  obs << alps::RealObservable("Time");
+  obs << alps::RealObservable("Speed");
   obs << alps::RealObservable("Number of Sites");
   obs << alps::RealObservable("Magnetization^2");
   obs << alps::RealObservable("Magnetization^4");
@@ -64,6 +67,8 @@ void Worker::init_observables(alps::Parameters const&, alps::ObservableSet& obs)
 
 void Worker::run(alps::ObservableSet& obs)
 {
+  boost::timer::cpu_timer tm;
+
   ++mcs_;
 
   // make clusters
@@ -125,6 +130,10 @@ void Worker::run(alps::ObservableSet& obs)
   obs["Energy"] << ene;
   obs["Activated Bonds"] << 1.0*activated;
   obs["Activated Bonds^2"] << 1.0*activated*activated;
+
+  const double sec = tm.elapsed().wall * 1.0e-9;
+  obs["Time"] << sec;
+  obs["Speed"] << 1.0/sec;
 }
 
 void Evaluator::evaluate(alps::ObservableSet& obs) const
