@@ -1,3 +1,5 @@
+*This repositry has moved into new repositry, http://github.com/yomichi/SpinMonteCarlo*
+
 # Ising-SW
 Swendsen-Wang algorithm for classical Ising / Potts model implemented with ALPS/parapack library.
 
